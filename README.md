@@ -5,7 +5,7 @@ A silly Xcode template repository idea I've had for a while.
 You want to develop for Apple platforms, but you don't want to drop the money on a new Mac.
 
 ### Solution
-(XcodeTemplate)[http://github.com/nythepegasus/XcodeTemplate]!
+[XcodeTemplate](http://github.com/nythepegasus/XcodeTemplate)!
 
 ### Features
 ---
