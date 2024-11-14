@@ -1,0 +1,5 @@
+
+CODE_SIGN_IDENTITY = Apple Development
+CODE_SIGN_IDENTITY[sdk=macosx*] = Apple Development
+DEVELOPMENT_TEAM = EU74F4WL9R
+ORG_PREFIX = ny
