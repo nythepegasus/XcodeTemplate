@@ -53,7 +53,7 @@ $(eval $(call package_ipa,$(MACOS_ZIP),$(MACOS_ARCHIVE)))
 $(eval $(call package_ipa,$(IOS_IPA),$(IOS_ARCHIVE)))
 $(eval $(call package_ipa,$(TVOS_IPA),$(TVOS_ARCHIVE)))
 
-ipas: $(MACOS_DMG) $(IOS_IPA) $(TVOS_IPA)
+ipas: $(MACOS_ZIP) $(IOS_IPA) $(TVOS_IPA)
 
 clean:
 	rm -rf "$(ARCHIVES)"
