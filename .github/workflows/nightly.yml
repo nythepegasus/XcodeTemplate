@@ -45,11 +45,8 @@ jobs:
           key: xcode-cache-deriveddata-${{ github.sha }}
           restore-keys: xcode-cache-deriveddata-
 
-      - name: Build apps
-        run: make build | xcpretty && exit ${PIPESTATUS[0]}
-
-      - name: Make IPAs
-        run: make ipas
+      - name: Build IPAs
+        run: make ipas | xcpretty && exit ${PIPESTATUS[0]}
 
       - name: Get current date
         id: date
@@ -60,7 +57,7 @@ jobs:
         run: echo "date=$(date -u +'%Y-%m-%d')" >> $GITHUB_OUTPUT
 
       - name: Add version to DMG file name
-        run: mv Archives/XcodeTemplate.dmg XcodeTemplate-${{ steps.version.outputs.version }}.dmg
+        run: mv Archives/XcodeTemplate.zip XcodeTemplate-${{ steps.version.outputs.version }}.zip
 
       - name: Add version to iOS IPA file name
         run: mv Archives/XcodeTemplate.ios.ipa XcodeTemplate.ios-${{ steps.version.outputs.version }}.ipa
@@ -68,11 +65,11 @@ jobs:
       - name: Add version to tvOS IPA file name
         run: mv Archives/XcodeTemplate.tvos.ipa XcodeTemplate.tvos-${{ steps.version.outputs.version }}.ipa
 
-      - name: Upload XcodeTemplate.dmg Artifact
+      - name: Upload XcodeTemplate.zip Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: XcodeTemplate-${{ steps.version.outputs.version }}.dmg
-          path: XcodeTemplate-${{ steps.version.outputs.version }}.dmg
+          name: XcodeTemplate-${{ steps.version.outputs.version }}.zip
+          path: XcodeTemplate-${{ steps.version.outputs.version }}.zip
 
       - name: Upload macOS *.dSYM Artifact
         uses: actions/upload-artifact@v4
