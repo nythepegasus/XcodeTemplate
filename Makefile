@@ -15,8 +15,7 @@ MACOS_ARCHIVE := $(ARCHIVES)/macOS-archive.xcarchive
 IOS_ARCHIVE   := $(ARCHIVES)/iOS-archive.xcarchive
 TVOS_ARCHIVE  := $(ARCHIVES)/tvOS-archive.xcarchive
 
-TMP_PAYDIR := Payload
-TMP_PAYLOAD := $(TMP_PAYDIR)/$(APP)/
+TMP_PAYLOAD := Payload/$(APP)/
 
 MACOS_ZIP := $(ARCHIVES)/$(TARGET).zip
 IOS_IPA := $(ARCHIVES)/$(TARGET).ios.ipa
@@ -41,17 +40,18 @@ $(eval $(call build_target,$(TVOS_ARCHIVE),iphoneos,tvOS-archive))
 
 build: $(MACOS_ARCHIVE) $(IOS_ARCHIVE) $(TVOS_ARCHIVE)
 
-define package_ipa
+define package_zip
 $(1): $(2)
-	@mkdir -p "$(TMP_PAYLOAD)"
-	@cp -R "$(2)/$(PRODUCT)" "$(TMP_PAYLOAD)"
-	zip -r "$@" "$(TMP_PAYLOAD)"
-	@rm -r "$(TMP_PAYDIR)"
+	@mkdir -p "$(3)"
+	@cp -R "$(2)/$(PRODUCT)" "$(3)"
+	zip -r "$(1)" "$(3)"
+	@rm -r "$(3)" || true
+	@rm -r Payload || true
 endef
 
-$(eval $(call package_ipa,$(MACOS_ZIP),$(MACOS_ARCHIVE)))
-$(eval $(call package_ipa,$(IOS_IPA),$(IOS_ARCHIVE)))
-$(eval $(call package_ipa,$(TVOS_IPA),$(TVOS_ARCHIVE)))
+$(eval $(call package_zip,$(MACOS_ZIP),$(MACOS_ARCHIVE),$(APP)))
+$(eval $(call package_zip,$(IOS_IPA),$(IOS_ARCHIVE),$(TMP_PAYLOAD)))
+$(eval $(call package_zip,$(TVOS_IPA),$(TVOS_ARCHIVE),$(TMP_PAYLOAD)))
 
 ipas: $(MACOS_ZIP) $(IOS_IPA) $(TVOS_IPA)
 
