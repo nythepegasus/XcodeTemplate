@@ -1,0 +1,28 @@
+
+SDKROOT                 = auto
+SUPPORTED_PLATFORMS     = iphoneos iphonesimulator appletvos appletvsimulator macosx xros xrsimulator
+GCC_DYNAMIC_NO_PIC      = YES
+GCC_NO_COMMON_BLOCKS    = YES
+LLVM_LTO                = YES
+COPY_PHASE_STRIP        =  NO
+DEAD_CODE_STRIPPING     = YES
+GENERATE_INFOPLIST_FILE = YES
+MTL_FAST_MATH           = YES
+SWIFT_VERSION           = 6.0
+
+ALWAYS_SEARCH_USER_PATHS             =  NO
+LOCALIZATION_PREFERS_STRING_CATALOGS = YES
+BUILD_LIBRARY_FOR_DISTRIBUTION       = YES
+CODE_SIGN_INJECT_BASE_ENTITLEMENTS   = YES
+ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES
+
+SWIFT_UPCOMING_FEATURE_INTERNAL_IMPORTS_BY_DEFAULT = YES
+SWIFT_UPCOMING_FEATURE_EXISTENTIAL_ANY             = YES
+
+ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS        = YES
+INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad[sdk=iphone*]    = UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight
+INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone[sdk=iphone*]  = UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight
+INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphone*] = YES
+INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphone*]    = YES
+INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphone*]                = YES
+INFOPLIST_KEY_NSStickerSharingLevel                                 =  OS

@@ -1,3 +1,5 @@
+#include "Defaults.xcconfig"
+
 /// Supported OS versions
 IPHONEOS_DEPLOYMENT_TARGET = 15.0
 MACOSX_DEPLOYMENT_TARGET   = 12.0

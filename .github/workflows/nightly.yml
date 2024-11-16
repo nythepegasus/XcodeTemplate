@@ -1,0 +1,133 @@
+name: Nightly app build
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  build:
+    name: Build and upload Nightly apps
+    concurrency:
+      group: ${{ github.ref }}
+      cancel-in-progress: true
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: 'macos-14'
+            version: '15.4'
+
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install dependencies
+        run: brew install ldid
+
+      - name: Get version
+        id: version
+        run: echo "version=nightly-$(date -u +'%Y.%m.%d')+$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Echo version
+        run: echo "${{ steps.version.outputs.version }}"
+
+      - name: Setup Xcode
+        uses: maxim-lobanov/setup-xcode@v1.6.0
+        with:
+          xcode-version: ${{ matrix.version }}
+
+      - name: Cache Build
+        uses: irgaly/xcode-cache@v1
+        with:
+          key: xcode-cache-deriveddata-${{ github.sha }}
+          restore-keys: xcode-cache-deriveddata-
+
+      - name: Build apps
+        run: make build | xcpretty && exit ${PIPESTATUS[0]}
+
+      - name: Make IPAs
+        run: make ipas
+
+      - name: Get current date
+        id: date
+        run: echo "date=$(date -u +'%c')" >> $GITHUB_OUTPUT
+
+      - name: Get current date in AltStore date form
+        id: date_altstore
+        run: echo "date=$(date -u +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+
+      - name: Upload to nightly release
+        uses: IsaacShelton/update-existing-release@v1.3.1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          release: "Nightly"
+          tag: "nightly"
+          prerelease: true
+          files: >
+              XcodeTemplate.dmg
+              XcodeTemplate.ios.ipa
+              XcodeTemplate.tvos.ipa
+
+          body: |
+            This is an ⚠️ **EXPERIMENTAL** ⚠️ nightly build for commit [${{ github.sha }}](https://github.com/${{ github.repository }}/commit/${{ github.sha }}).
+            
+            Nightly builds are **extremely experimental builds only meant to be used by developers and alpha testers. They often contain bugs and experimental features. Use at your own risk!**
+            
+            If you want to try out new features early but want a lower chance of bugs, you can look at [Our Beta](https://github.com/${{ github.repository }}/releases?q=beta).
+            
+            ## Build Info
+            
+            Built at (UTC): `${{ steps.date.outputs.date }}`
+            Built at (UTC date): `${{ steps.date_altstore.outputs.date }}`
+            Commit SHA: `${{ github.sha }}`
+            Version: `${{ steps.version.outputs.version }}`
+
+      - name: Add version to DMG file name
+        run: mv Archives/XcodeTemplate.dmg XcodeTemplate-${{ steps.version.outputs.version }}.dmg
+
+      - name: Add version to iOS IPA file name
+        run: mv Archives/XcodeTemplate.ios.ipa XcodeTemplate.ios-${{ steps.version.outputs.version }}.ipa
+
+      - name: Add version to tvOS IPA file name
+        run: mv Archives/XcodeTemplate.tvos.ipa XcodeTemplate.tvos-${{ steps.version.outputs.version }}.ipa
+
+      - name: Upload XcodeTemplate.dmg Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: XcodeTemplate-${{ steps.version.outputs.version }}.dmg
+          path: XcodeTemplate-${{ steps.version.outputs.version }}.dmg
+
+      - name: Upload macOS *.dSYM Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: XcodeTemplate-macOS-${{ steps.version.outputs.version }}-dSYM
+          path: ./Archives/macOS-archive.xcarchive/dSYMs/*.dSYM
+
+
+      - name: Upload XcodeTemplate.ios.ipa Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: XcodeTemplate.ios-${{ steps.version.outputs.version }}.ipa
+          path: XcodeTemplate.ios-${{ steps.version.outputs.version }}.ipa
+
+      - name: Upload iOS *.dSYM Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: XcodeTemplate-iOS-${{ steps.version.outputs.version }}-dSYM
+          path: ./Archives/iOS-archive.xcarchive/dSYMs/*.dSYM
+
+      - name: Upload XcodeTemplate.tvos.ipa Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: XcodeTemplate.tvos-${{ steps.version.outputs.version }}.ipa
+          path: XcodeTemplate.tvos-${{ steps.version.outputs.version }}.ipa
+
+      - name: Upload iOS *.dSYM Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: XcodeTemplate-tvOS-${{ steps.version.outputs.version }}-dSYM
+          path: ./Archives/tvOS-archive.xcarchive/dSYMs/*.dSYM
+
