@@ -59,32 +59,6 @@ jobs:
         id: date_altstore
         run: echo "date=$(date -u +'%Y-%m-%d')" >> $GITHUB_OUTPUT
 
-      - name: Upload to nightly release
-        uses: IsaacShelton/update-existing-release@v1.3.1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          release: "Nightly"
-          tag: "nightly"
-          prerelease: true
-          files: >
-              XcodeTemplate.dmg
-              XcodeTemplate.ios.ipa
-              XcodeTemplate.tvos.ipa
-
-          body: |
-            This is an ⚠️ **EXPERIMENTAL** ⚠️ nightly build for commit [${{ github.sha }}](https://github.com/${{ github.repository }}/commit/${{ github.sha }}).
-            
-            Nightly builds are **extremely experimental builds only meant to be used by developers and alpha testers. They often contain bugs and experimental features. Use at your own risk!**
-            
-            If you want to try out new features early but want a lower chance of bugs, you can look at [Our Beta](https://github.com/${{ github.repository }}/releases?q=beta).
-            
-            ## Build Info
-            
-            Built at (UTC): `${{ steps.date.outputs.date }}`
-            Built at (UTC date): `${{ steps.date_altstore.outputs.date }}`
-            Commit SHA: `${{ github.sha }}`
-            Version: `${{ steps.version.outputs.version }}`
-
       - name: Add version to DMG file name
         run: mv Archives/XcodeTemplate.dmg XcodeTemplate-${{ steps.version.outputs.version }}.dmg
 
@@ -105,7 +79,6 @@ jobs:
         with:
           name: XcodeTemplate-macOS-${{ steps.version.outputs.version }}-dSYM
           path: ./Archives/macOS-archive.xcarchive/dSYMs/*.dSYM
-
 
       - name: Upload XcodeTemplate.ios.ipa Artifact
         uses: actions/upload-artifact@v4
