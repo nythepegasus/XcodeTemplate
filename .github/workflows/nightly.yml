@@ -14,8 +14,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: 'macos-15'
-            version: '16.0'
+          - os: 'macos-13'
+            version: '14.0'
 
     runs-on: ${{ matrix.os }}
     steps:
@@ -45,11 +45,8 @@ jobs:
           key: xcode-cache-deriveddata-${{ github.sha }}
           restore-keys: xcode-cache-deriveddata-
 
-      - name: Build apps
-        run: make build | xcpretty && exit ${PIPESTATUS[0]}
-
       - name: Make IPAs
-        run: make ipas
+        run: make ipas | xcpretty && exit ${PIPESTATUS[0]}
 
       - name: Get current date
         id: date
