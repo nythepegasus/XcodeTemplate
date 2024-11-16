@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 71;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -35,7 +35,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		0EE8BD712CE69F2100C2F998 /* Exceptions for "Config" folder in "XcodeTemplate" target */ = {
+		0EE8BD712CE69F2100C2F998 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Build.xcconfig,
@@ -44,7 +44,7 @@
 			);
 			target = 0E0ACD242CE67969001681C0 /* XcodeTemplate */;
 		};
-		0EE8BD9B2CE6A22800C2F998 /* Exceptions for "XcodeTemplate" folder in "XcodeTemplate" target */ = {
+		0EE8BD9B2CE6A22800C2F998 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Misc/Info.plist,
@@ -54,27 +54,9 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		0E0ACD272CE67969001681C0 /* XcodeTemplate */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				0EE8BD9B2CE6A22800C2F998 /* Exceptions for "XcodeTemplate" folder in "XcodeTemplate" target */,
-			);
-			path = XcodeTemplate;
-			sourceTree = "<group>";
-		};
-		0EE8BD682CE69F0400C2F998 /* Config */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				0EE8BD712CE69F2100C2F998 /* Exceptions for "Config" folder in "XcodeTemplate" target */,
-			);
-			path = Config;
-			sourceTree = "<group>";
-		};
-		0EE8BD702CE69F1800C2F998 /* Tests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Tests;
-			sourceTree = "<group>";
-		};
+		0E0ACD272CE67969001681C0 /* XcodeTemplate */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (0EE8BD9B2CE6A22800C2F998 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = XcodeTemplate; sourceTree = "<group>"; };
+		0EE8BD682CE69F0400C2F998 /* Config */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (0EE8BD712CE69F2100C2F998 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Config; sourceTree = "<group>"; };
+		0EE8BD702CE69F1800C2F998 /* Tests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Tests; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,7 +186,6 @@
 		0E0ACD1D2CE67969001681C0 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1600;
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
@@ -222,6 +203,7 @@
 				};
 			};
 			buildConfigurationList = 0E0ACD202CE67969001681C0 /* Build configuration list for PBXProject "XcodeTemplate" */;
+			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -233,7 +215,6 @@
 			packageReferences = (
 				0EE8BD782CE69FAD00C2F998 /* XCRemoteSwiftPackageReference "Defaultable" */,
 			);
-			preferredProjectObjectVersion = 77;
 			productRefGroup = 0E0ACD262CE67969001681C0 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
